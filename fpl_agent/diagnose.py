@@ -99,18 +99,21 @@ def diagnose_squad(
         ))
 
     # --- captaincy ----------------------------------------------------
+    # The armband only pays out on the next gameweek, so the check is
+    # against `next_gw_points`, not the horizon-total `expected_points`
+    # used everywhere else in this file.
     if squad.captain:
-        best = max(squad.starters, key=lambda p: p.expected_points)
+        best = max(squad.starters, key=lambda p: p.next_gw_points)
         if best is not squad.captain:
             findings.append(Finding(
                 "high",
-                "Captain is not your best projected starter",
+                "Captain is not your best projected starter next gameweek",
                 f"Captaining {best.player.web_name} instead of "
                 f"{squad.captain.player.web_name} is worth "
-                f"{best.expected_points - squad.captain.expected_points:.1f} points "
-                f"over the horizon, for free.",
+                f"{best.next_gw_points - squad.captain.next_gw_points:.1f} points "
+                f"next gameweek, for free.",
                 [f"current: {_fmt(squad.captain)}", f"better: {_fmt(best)}"],
-                cost=best.expected_points - squad.captain.expected_points,
+                cost=best.next_gw_points - squad.captain.next_gw_points,
             ))
 
     # --- budget efficiency --------------------------------------------

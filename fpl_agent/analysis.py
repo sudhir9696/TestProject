@@ -327,6 +327,7 @@ class ProjectionModel:
 
         p_start = self.start_probability(player)
         total_points = 0.0
+        next_gw_points = 0.0
         totals = {"attacking": 0.0, "defending": 0.0, "saves": 0.0, "bonus": 0.0, "defcon": 0.0}
         cs_probs, multipliers = [], []
         congestion_notes = []
@@ -363,7 +364,12 @@ class ProjectionModel:
             minutes_factor = 0.15 * player.availability + 0.85 * fixture_p_start
             anchor = (w_form * player.form + w_ep * player.ep_next) * ease * minutes_factor
 
-            total_points += w_model * model_points + anchor
+            fixture_points = w_model * model_points + anchor
+            total_points += fixture_points
+            # A double gameweek plays two fixtures in the same event and the
+            # captain multiplier applies to both, so both must count here.
+            if fixture.event == start_gw:
+                next_gw_points += fixture_points
 
             for key in totals:
                 totals[key] += fixture_p_start * parts[key]
@@ -383,6 +389,7 @@ class ProjectionModel:
         return Projection(
             player=player,
             expected_points=round(total_points, 2),
+            next_gw_points=round(next_gw_points, 2),
             per_gw=round(per_gw, 2),
             start_probability=round(p_start, 3),
             fixture_score=round(fixture_score, 3),
