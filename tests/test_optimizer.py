@@ -1,10 +1,32 @@
 import pytest
 
-from fpl_agent.models import SQUAD_QUOTA, XI_RANGE
+from fpl_agent.models import SQUAD_QUOTA, XI_RANGE, Player, Projection
 from fpl_agent.optimizer import (
     OptimizerError, _filter_pool, _optimize_ilp, _optimize_local_search, _squad_objective,
     build_squad_object, optimize_squad, pick_best_xi, suggest_transfers,
 )
+
+
+def _make_player(pid: int, position: str) -> Player:
+    return Player(
+        id=pid, web_name=f"P{pid}", first_name="Test", second_name=f"P{pid}",
+        team=pid, position=position, cost=5.0, total_points=0, form=0.0,
+        points_per_game=0.0, selected_by=0.0, minutes=270, starts=3, goals=0,
+        assists=0, clean_sheets=0, goals_conceded=0, saves=0, bonus=0, bps=0,
+        ict_index=0.0, expected_goals=0.0, expected_assists=0.0,
+        expected_goals_conceded=0.0, defensive_contribution=0.0, status="a",
+        chance_of_playing=None, ep_next=0.0,
+    )
+
+
+def _make_projection(pid: int, position: str, expected_points: float,
+                      next_gw_points: float) -> Projection:
+    player = _make_player(pid, position)
+    return Projection(
+        player=player, expected_points=expected_points, next_gw_points=next_gw_points,
+        per_gw=expected_points / 6, start_probability=0.9, fixture_score=1.0,
+        num_fixtures=6, value=expected_points / player.cost,
+    )
 
 
 def assert_legal_squad(squad, budget=100.0, max_per_team=3):
@@ -46,11 +68,33 @@ def test_squad_spends_most_of_the_budget(squad):
     assert squad.cost > 95.0
 
 
-def test_captain_is_the_highest_scorer_in_the_xi(squad):
+def test_captain_is_the_best_next_gameweek_scorer_in_the_xi(squad):
+    """The armband is a single-gameweek decision, so it must be ranked by
+    next_gw_points -- not by the horizon-total expected_points used to build
+    the XI itself. See test_captain_ignores_horizon_total_when_it_disagrees
+    for the regression this guards against."""
     assert squad.captain is not None
-    assert squad.captain.expected_points == max(p.expected_points for p in squad.starters)
+    assert squad.captain.next_gw_points == max(p.next_gw_points for p in squad.starters)
     assert squad.vice_captain is not None
     assert squad.captain is not squad.vice_captain
+
+
+def test_build_squad_object_prefers_next_gw_scorer_for_captain():
+    """Deterministic regression for the horizon-vs-next-gameweek captain bug:
+    a player with the highest 6-gameweek total but a weak next fixture (the
+    Bruno Fernandes case -- strong on aggregate, tougher immediate matchup)
+    must not out-armband a teammate who scores less overall but more in the
+    single upcoming gameweek (the Isak case -- an easier next fixture), since
+    the armband only ever pays out on that one gameweek."""
+    horizon_winner = _make_projection(1, "FWD", expected_points=40.0, next_gw_points=4.0)
+    next_gw_winner = _make_projection(2, "FWD", expected_points=30.0, next_gw_points=15.0)
+    filler = [_make_projection(i, pos, 10.0, 2.0) for i, pos in [
+        (3, "GK"), (4, "DEF"), (5, "DEF"), (6, "DEF"),
+        (7, "MID"), (8, "MID"), (9, "MID"), (10, "MID"), (11, "MID"),
+    ]]
+    squad = build_squad_object([horizon_winner, next_gw_winner] + filler)
+    assert squad.captain is next_gw_winner
+    assert squad.vice_captain is horizon_winner
 
 
 def test_starters_outscore_the_bench(squad):

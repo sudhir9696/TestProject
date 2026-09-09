@@ -280,6 +280,8 @@ class Projection:
 
     player: Player
     expected_points: float          # total over the horizon
+    next_gw_points: float           # the single upcoming gameweek only -- what
+                                     # the captain's armband actually multiplies
     per_gw: float                   # average per gameweek
     start_probability: float
     fixture_score: float            # >1 favourable, <1 tough

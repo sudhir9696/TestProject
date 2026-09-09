@@ -245,7 +245,8 @@ def markdown_report(
         if squad.captain:
             out.append(
                 f"**Captain:** {squad.captain.player.web_name} "
-                f"({squad.captain.expected_points:.1f} xPTS over the horizon, "
+                f"({squad.captain.next_gw_points:.1f} xPTS next GW, "
+                f"{squad.captain.expected_points:.1f} over the full horizon, "
                 f"fixture score {squad.captain.fixture_score:.2f})"
             )
             out.append("")

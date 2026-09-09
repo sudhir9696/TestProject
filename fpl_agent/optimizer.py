@@ -85,9 +85,18 @@ def pick_best_xi(picks: Iterable[Projection]) -> tuple:
 
 
 def build_squad_object(picks: list) -> Squad:
-    """Wrap 15 projections into a Squad with XI, bench, captain and vice."""
+    """Wrap 15 projections into a Squad with XI, bench, captain and vice.
+
+    The armband is a single-gameweek decision -- it is re-chosen every week,
+    never carried across the horizon -- so captain and vice are ranked by
+    `next_gw_points`, not by the horizon-total `expected_points` used for XI
+    and bench order. Ties (e.g. two players sharing a blank gameweek) fall
+    back to the horizon total.
+    """
     starters, bench = pick_best_xi(picks)
-    ranked = sorted(starters, key=lambda pr: pr.expected_points, reverse=True)
+    ranked = sorted(
+        starters, key=lambda pr: (pr.next_gw_points, pr.expected_points), reverse=True
+    )
     return Squad(
         picks=list(picks),
         starters=starters,
