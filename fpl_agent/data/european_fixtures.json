@@ -1,56 +1,194 @@
 {
-  "_source": "uefa.com — 2026/27 competition calendars",
-  "_updated": "2026-08-22",
-  "_note": "Matchday dates are fixed and published. Team lists are NOT final: the Europa and Conference League league-phase draws are on 28 Aug 2026, and Champions League entrants depend on the 2025/26 Premier League final table. Fill `teams` in with FPL short_name codes once the draws are made; until a competition has teams, it has no effect on the model.",
-  "_teams_verified": false,
-
+  "_source": "uefa.com \u2014 2026/27 competition calendars",
+  "_updated": "2026-09-13",
+  "_note": "Matchday dates and participants from uefa.com, after the 28 Aug 2026 league-phase draws. Team codes are FPL `short_name`. Nott'm Forest has a UEL 2026/27 club page on uefa.com but was absent from the qualified-teams summary; left out rather than guessed, since including a club wrongly penalises every one of its players.",
+  "_teams_verified": true,
   "competitions": {
     "UCL": {
       "name": "UEFA Champions League",
       "typical_weekday": "Tuesday/Wednesday",
-      "teams": [],
-      "_teams_pending": "England has four automatic league-phase spots (2025/26 Premier League top four) plus Liverpool via the European Performance Spot.",
+      "teams": [
+        "ARS",
+        "AVL",
+        "LIV",
+        "MCI",
+        "MUN"
+      ],
       "matchdays": [
-        {"md": 1, "dates": ["2026-09-08", "2026-09-09", "2026-09-10"]},
-        {"md": 2, "dates": ["2026-10-13", "2026-10-14"]},
-        {"md": 3, "dates": ["2026-10-20", "2026-10-21"]},
-        {"md": 4, "dates": ["2026-11-03", "2026-11-04"]},
-        {"md": 5, "dates": ["2026-11-24", "2026-11-25"]},
-        {"md": 6, "dates": ["2026-12-08", "2026-12-09"]},
-        {"md": 7, "dates": ["2027-01-19", "2027-01-20"]},
-        {"md": 8, "dates": ["2027-01-27"]}
+        {
+          "md": 1,
+          "dates": [
+            "2026-09-08",
+            "2026-09-09",
+            "2026-09-10"
+          ]
+        },
+        {
+          "md": 2,
+          "dates": [
+            "2026-10-13",
+            "2026-10-14"
+          ]
+        },
+        {
+          "md": 3,
+          "dates": [
+            "2026-10-20",
+            "2026-10-21"
+          ]
+        },
+        {
+          "md": 4,
+          "dates": [
+            "2026-11-03",
+            "2026-11-04"
+          ]
+        },
+        {
+          "md": 5,
+          "dates": [
+            "2026-11-24",
+            "2026-11-25"
+          ]
+        },
+        {
+          "md": 6,
+          "dates": [
+            "2026-12-08",
+            "2026-12-09"
+          ]
+        },
+        {
+          "md": 7,
+          "dates": [
+            "2027-01-19",
+            "2027-01-20"
+          ]
+        },
+        {
+          "md": 8,
+          "dates": [
+            "2027-01-27"
+          ]
+        }
       ]
     },
     "UEL": {
       "name": "UEFA Europa League",
       "typical_weekday": "Thursday",
-      "teams": [],
-      "_teams_pending": "League phase draw 28 Aug 2026.",
+      "teams": [
+        "BOU",
+        "CRY",
+        "SUN"
+      ],
       "matchdays": [
-        {"md": 1, "dates": ["2026-09-16", "2026-09-17"]},
-        {"md": 2, "dates": ["2026-10-15"]},
-        {"md": 3, "dates": ["2026-10-22"]},
-        {"md": 4, "dates": ["2026-11-05"]},
-        {"md": 5, "dates": ["2026-11-26"]},
-        {"md": 6, "dates": ["2026-12-10"]},
-        {"md": 7, "dates": ["2027-01-21"]},
-        {"md": 8, "dates": ["2027-01-28"]}
+        {
+          "md": 1,
+          "dates": [
+            "2026-09-16",
+            "2026-09-17"
+          ]
+        },
+        {
+          "md": 2,
+          "dates": [
+            "2026-10-15"
+          ]
+        },
+        {
+          "md": 3,
+          "dates": [
+            "2026-10-22"
+          ]
+        },
+        {
+          "md": 4,
+          "dates": [
+            "2026-11-05"
+          ]
+        },
+        {
+          "md": 5,
+          "dates": [
+            "2026-11-26"
+          ]
+        },
+        {
+          "md": 6,
+          "dates": [
+            "2026-12-10"
+          ]
+        },
+        {
+          "md": 7,
+          "dates": [
+            "2027-01-21"
+          ]
+        },
+        {
+          "md": 8,
+          "dates": [
+            "2027-01-28"
+          ]
+        }
       ]
     },
     "UECL": {
       "name": "UEFA Conference League",
       "typical_weekday": "Thursday",
-      "teams": [],
-      "_teams_pending": "League phase draw 28 Aug 2026.",
+      "teams": [
+        "BHA"
+      ],
       "matchdays": [
-        {"md": 1, "dates": ["2026-09-16", "2026-09-17"]},
-        {"md": 2, "dates": ["2026-10-15"]},
-        {"md": 3, "dates": ["2026-10-22"]},
-        {"md": 4, "dates": ["2026-11-05"]},
-        {"md": 5, "dates": ["2026-11-26"]},
-        {"md": 6, "dates": ["2026-12-10"]},
-        {"md": 7, "dates": ["2027-01-21"]},
-        {"md": 8, "dates": ["2027-01-28"]}
+        {
+          "md": 1,
+          "dates": [
+            "2026-09-16",
+            "2026-09-17"
+          ]
+        },
+        {
+          "md": 2,
+          "dates": [
+            "2026-10-15"
+          ]
+        },
+        {
+          "md": 3,
+          "dates": [
+            "2026-10-22"
+          ]
+        },
+        {
+          "md": 4,
+          "dates": [
+            "2026-11-05"
+          ]
+        },
+        {
+          "md": 5,
+          "dates": [
+            "2026-11-26"
+          ]
+        },
+        {
+          "md": 6,
+          "dates": [
+            "2026-12-10"
+          ]
+        },
+        {
+          "md": 7,
+          "dates": [
+            "2027-01-21"
+          ]
+        },
+        {
+          "md": 8,
+          "dates": [
+            "2027-01-28"
+          ]
+        }
       ]
     }
   }
